@@ -104,9 +104,7 @@ const ProductConfirmation = () => {
             if (response?.statusText === "Created") {
                 setSuccess("Order updated successfully");
                 clearCart();
-                setTimeout(() => {
-                    navigate('/delivery');
-                }, 1000);
+                navigate('/delivery');
             }
 
         } catch (error) {
