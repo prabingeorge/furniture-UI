@@ -1,0 +1,18 @@
+.images-view {
+    .order-rectangle-image {
+        height: 500px;
+        width: 500px;
+        cursor: pointer;
+    }
+    .rectangle-image {
+        height: 250px;
+        width: 400px;
+        cursor: pointer;
+    }
+    .circle-image {
+        height: 160px;
+        width: 200px;
+        cursor: pointer;
+    }
+    
+}

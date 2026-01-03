@@ -1,0 +1,10 @@
+.cart-view {
+    display: flex;
+    align-items: center;
+    color: #2c822c;
+    font-size: 18px;
+    font-weight: bold;
+    flex-direction: column;
+    margin-top: 80px;
+    padding: 0px 40px;
+}

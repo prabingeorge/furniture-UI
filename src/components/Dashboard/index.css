@@ -1,0 +1,17 @@
+.dashboard {
+
+    .images-container {
+        display: flex;
+        flex-direction: row;
+        margin: 0px 20px;
+        flex-wrap: wrap;
+    }
+
+    .no-data {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 40px;
+        font-weight: bold;
+    }
+}
