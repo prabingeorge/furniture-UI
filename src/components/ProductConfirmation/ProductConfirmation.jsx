@@ -101,12 +101,13 @@ const ProductConfirmation = () => {
             });
             await Promise.all(promises);
 
-            if (response?.statusText === "Created") {
-                setSuccess("Order updated successfully");
-                clearCart();
-                navigate('/delivery');
-            }
-
+            clearCart();
+            navigate('/delivery');
+            // if (response?.statusText === "Created") {
+            //     setSuccess("Order updated successfully");
+            //     clearCart();
+            //     navigate('/delivery');
+            // }
         } catch (error) {
             // if(error?.response?.data?.message) {
             //     setError(error?.response?.data?.message);
