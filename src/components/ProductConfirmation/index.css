@@ -152,6 +152,33 @@
                 margin: 10px 10px;
                 display: flex;
                 justify-content: space-between;
+
+                .input {
+                    padding: 5px;
+                }
+
+                &.button-container {
+                    justify-content: end;
+
+                     .button {
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 25px;
+                    color: #000;
+                    display: block;
+                    font-weight: bold;
+                    font-size: 16px;
+                    font-family: 'Times New Roman', Times, serif;
+                    cursor: pointer;
+                    background: #1161ee;
+
+                    &:hover {
+                        background: #598de6;
+                        color: #000;
+                    }
+                }
+                }
+               
             }
         }
     }

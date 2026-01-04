@@ -130,7 +130,7 @@ const ProductConfirmation = () => {
         email: "",
         password: ""
     });
-    const [isLoggedIn, setIsLoggedIn] = useState(!!user?.phone);
+    // const [isLoggedIn, setIsLoggedIn] = useState(!!user?.phone);
     const [isNewUser, setIsNewUser] = useState(false);
     const [loginError, setLoginError] = useState("");
 
@@ -158,7 +158,7 @@ const ProductConfirmation = () => {
             const { token } = response.data;
 
             login(token);
-            setIsLoggedIn(true);
+            // setIsLoggedIn(true);
         } catch (error) {
             if (error?.response?.data?.message) {
                 setLoginError(error?.response?.data?.message);
@@ -210,7 +210,7 @@ const ProductConfirmation = () => {
                     )
                 })}
             </ul>
-            {user && isLoggedIn && <div>
+            {user && <div>
                 <ul className="loggedin-panel">
                     <li>
                         Name: {user?.name}
@@ -223,7 +223,7 @@ const ProductConfirmation = () => {
                     </li>
                 </ul>
             </div>}
-            {!isLoggedIn && !isNewUser && <div>
+            {!user && !isNewUser && <div>
                 <div className="login-header">
                     New User Click here to Register <Link onClick={() => setIsNewUser(true)}> Click</Link>
                 </div>
@@ -240,13 +240,13 @@ const ProductConfirmation = () => {
                         <li>
                             {loginError && <p className="error">{loginError}</p>}
                         </li>
-                        <li>
+                        <li className="button-container">
                             <input type="button" className="button" value="Sign In" onClick={handleSubmit} />
                         </li>
                     </ul>
                 </div>
             </div>}
-            {!isLoggedIn && isNewUser && <div>
+            {!user && isNewUser && <div>
                 <div className="login-header">
                     Already registered user <Link onClick={() => setIsNewUser(false)}> Click</Link>
                 </div>
@@ -295,7 +295,7 @@ const ProductConfirmation = () => {
                 </ul>
             </div>
             }
-            {user && isLoggedIn && <div className="confirm-button-wrapper">
+            {user && <div className="confirm-button-wrapper">
                 <input type="button" className="button" value="Confirmed" onClick={confirmedClick} />
             </div>}
         </div>
