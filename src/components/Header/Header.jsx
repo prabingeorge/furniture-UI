@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import api from "../../contexts/APIContext";
 import "./index.css";
 import starLogo from "../../assets/images/header/star-logo.gif";
@@ -10,6 +11,7 @@ const Header = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const selectedId = searchParams.get("id") || 1;
     const [categoriesList, setCategoriesList] = useState([]);
+    const { user, logout } = useAuth();
 
     const apiURL = import.meta.env.VITE_API_URL;
     useEffect(() => {
@@ -49,6 +51,14 @@ const Header = () => {
             <div className="middle-header">
                 <div>
                     <img src={starLogo} alt="logo" className="header-logo" />
+                </div>
+                <div className="menu-container">
+                    {user?.name ? <>
+                        <label onClick={logout}>{user?.name} (Logout)</label>
+                    </>:
+                    <label>Sign In</label>}
+                    <label>Wishlist (0)</label>
+                    <label>Cart (0)</label>
                 </div>
             </div>
             <div className="bottom-header">

@@ -210,7 +210,7 @@ const ProductConfirmation = () => {
                     )
                 })}
             </ul>
-            {isLoggedIn && <div>
+            {user && isLoggedIn && <div>
                 <ul className="loggedin-panel">
                     <li>
                         Name: {user?.name}
@@ -295,7 +295,7 @@ const ProductConfirmation = () => {
                 </ul>
             </div>
             }
-            {isLoggedIn && <div className="confirm-button-wrapper">
+            {user && isLoggedIn && <div className="confirm-button-wrapper">
                 <input type="button" className="button" value="Confirmed" onClick={confirmedClick} />
             </div>}
         </div>

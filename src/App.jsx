@@ -18,47 +18,50 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<>
+          <Header />
+          <Dashboard />
+        </>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute>
+            <>
               <Header />
               <Dashboard />
-            </ProtectedRoute>
+            </>
           }
         />
         <Route
           path="/categories-list/:categoryId/:id"
           element={
-            <ProtectedRoute>
+            <>
               <Header />
               <CategoriesList />
-            </ProtectedRoute>
+            </>
           }
         />
         <Route
           path="/product-order/:id/:listItemId"
           element={
-            <ProtectedRoute>
+            <>
               <Header />
               <ProductOrder />
-            </ProtectedRoute>
+            </>
           }
         />
         <Route
           path="/product-confirmation/:listItemId"
           element={
-            <ProtectedRoute>
+            <>
               <Header />
               <ProductConfirmation />
-            </ProtectedRoute>
+            </>
           }
         />
-         <Route
+        <Route
           path="/delivery"
           element={
             <ProtectedRoute>

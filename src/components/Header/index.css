@@ -31,8 +31,19 @@
     }
 
     .middle-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
         .header-logo {
             height: 90px;
+        }
+
+        .menu-container {
+            label {
+                margin: 5px;
+                cursor: pointer;
+            }
         }
     }
 
