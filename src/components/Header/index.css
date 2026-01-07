@@ -48,6 +48,19 @@
         }
     }
 
+    @media only screen and (max-width: 600px) {
+        .menu-container {
+           display: flex;
+            width: -webkit-fill-available;
+            justify-content: flex-end;
+
+            label {
+                margin: 5px;
+                cursor: pointer;
+            }
+        }
+    }
+
     .bottom-header {
         .bottom-menu {
             list-style: none;
