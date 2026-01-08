@@ -17,6 +17,10 @@
 
     .left-menu {
         list-style: none;
+
+        .active-menu {
+            border-bottom: 2px solid #ffa500;
+        }
     }
 
     .right-menu {
@@ -50,7 +54,7 @@
 
     @media only screen and (max-width: 600px) {
         .menu-container {
-           display: flex;
+            display: flex;
             width: -webkit-fill-available;
             justify-content: flex-end;
 

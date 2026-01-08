@@ -36,7 +36,7 @@ const Header = () => {
                 <div className="header-wrapper">
                     <ul className="left-menu">
                         <li>
-                            Furniture
+                            <label className="active-menu">Furniture</label>
                         </li>
                     </ul>
                     <ul className="right-menu">
