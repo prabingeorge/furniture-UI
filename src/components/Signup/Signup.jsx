@@ -62,7 +62,7 @@ const Signup = () => {
             }
             const response = await api.post(apiURL + "/api/auth/register", signupInfoCopy);
 
-            if (response?.statusText === "Created") {
+            if (response?.status === 201 && !!response?.data?.token) {
                 setSuccess("Registered successfully. Kindly do SignIn");
                 setSignupInfo(initialSignupInfo);
             }
