@@ -5,13 +5,15 @@ import './index.css';
 // const baseUrl = `https://furniture-ui-2qka.onrender.com/public/images`;
 const baseUrl = `/images/`;
 
-const Images = ({fileName, categoryId, id, path, cssClass}) => {
+const Images = ({ fileName, categoryId, id, path, cssClass }) => {
     const url = baseUrl + path + '/' + fileName;
 
     return (
         <div className="images-view">
-            <Link to={"/categories-list/" + categoryId +"/" + id}>
-                <img className={cssClass} src={url} alt={fileName} />
+            <Link to={"/categories-list/" + categoryId + "/" + id}>
+                <img className={cssClass} src={url} alt={fileName} srcSet={`  
+                    ${url} 200w,  
+                `} />
             </Link>
         </div>
     )

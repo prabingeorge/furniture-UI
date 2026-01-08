@@ -3,16 +3,30 @@
         height: 500px;
         width: 500px;
         cursor: pointer;
+        @media only screen and (max-width: 600px) {
+            width: 360px;
+            height: 400px;
+        }
     }
     .rectangle-image {
         height: 250px;
         width: 400px;
         cursor: pointer;
+        @media only screen and (max-width: 600px) {
+            width: 360px;
+        }
+    }
+    .square-image {
+        height: 160px;
+        width: 200px;
+        cursor: pointer;
+        @media only screen and (max-width: 600px) {
+            width: 100%;
+        }
     }
     .circle-image {
         height: 160px;
         width: 200px;
         cursor: pointer;
     }
-    
 }

@@ -189,20 +189,26 @@ const ProductConfirmation = () => {
                             <li className="product-wrapper">
                                 <div className="product-details">
                                     <div>
-                                        Name: {item?.item_name}
+                                        Name: <label>{item?.item_name}</label>
                                     </div>
                                     <div>
-                                        Price: {item?.price} <label>{item?.discount_price}</label> Total: {item?.price - item?.discount_price}
+                                        Price: <label>{item?.price}</label> per Product
                                     </div>
                                     <div>
-                                        Quantity: {item?.quantity}
+                                        Discount: <label>{item?.discount_price}</label>
+                                    </div>
+                                    <div>
+                                        Total: <label>{(item?.price - item?.discount_price) * item?.quantity}</label>
+                                    </div>
+                                    <div>
+                                        Quantity: <label>{item?.quantity}</label>
                                     </div>
                                     <div className="footer-container">
                                         <input type="button" className="button" value="Remove" onClick={() => removeItemClick(item)} />
                                     </div>
                                 </div>
                                 <div>
-                                    <Images fileName={item?.image_name} path={'details'} cssClass={'circle-image'} />
+                                    <Images fileName={item?.image_name} path={'details'} cssClass={'square-image'} />
                                 </div>
                             </li>
                         </>
@@ -225,7 +231,7 @@ const ProductConfirmation = () => {
             </div>}
             {!user && !isNewUser && <div>
                 <div className="login-header">
-                    New User Click here to Register <Link onClick={() => setIsNewUser(true)}> Click</Link>
+                    New User Click here to Register <Link className="link" onClick={() => setIsNewUser(true)}> Click</Link>
                 </div>
                 <div className="login-panel">
                     <ul className="login-container">
@@ -248,7 +254,7 @@ const ProductConfirmation = () => {
             </div>}
             {!user && isNewUser && <div>
                 <div className="login-header">
-                    Already registered user <Link onClick={() => setIsNewUser(false)}> Click</Link>
+                    Already registered user <Link className="link" onClick={() => setIsNewUser(false)}> Click</Link>
                 </div>
                 <ul className="product-panel">
                     <li>
@@ -278,18 +284,18 @@ const ProductConfirmation = () => {
                     <li>
                         <div className="group">
                             <label htmlFor="confirmPassword" className="label">Confirm Password*</label>
-                            <input type="password" name="confirmPassword" placeholder="Confirm Password" value={userInfo?.confirmPassword} onChange={addFieldValue} className="input" />
+                            <input type="password" name="confirmPassword" placeholder="Confirm" value={userInfo?.confirmPassword} onChange={addFieldValue} className="input" />
                         </div>
                     </li>
+                    {(error || success) && <li>
+                        <div className="group group-error">
+                            {error && <label className="error">{error}</label>}
+                            {success && <label className="success">{success}</label>}
+                        </div>
+                    </li>}
                     <li>
                         <div className="group">
                             <input type="button" className="button" value="Save" onClick={saveUserInfo} />
-                        </div>
-                    </li>
-                    <li>
-                        <div className="group group-error">
-                            {error && <p className="error">{error}</p>}
-                            {success && <p className="success">{success}</p>}
                         </div>
                     </li>
                 </ul>
