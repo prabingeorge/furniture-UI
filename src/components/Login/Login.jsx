@@ -82,6 +82,9 @@ const Login = () => {
                     New User?<Link to="/signup"> Click here!</Link>
                   </div>
                 </div>
+                <div className="footer-last">
+                  <Link className="link" to="/dashboard"> Click here for Dashboard!</Link>
+                </div>
               </div>
             </div>
           </div>

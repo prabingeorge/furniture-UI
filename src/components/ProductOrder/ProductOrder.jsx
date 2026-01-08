@@ -1,14 +1,15 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Images from "../Images/Images";
 import api from "../../contexts/APIContext";
 import { CartContext } from "../../contexts/Cart";
 import './index.css';
 
 const ProductOrder = () => {
-    const { cartItems } = useContext(CartContext);
+    const { cartItems, addCartQuantityCount } = useContext(CartContext);
     let params = useParams();
+    const navigate = useNavigate();
 
     const [productQuantity, setProductQuantity] = useState(1);
     const [product, setProduct] = useState(null);
@@ -20,6 +21,8 @@ const ProductOrder = () => {
                 const response = await api.post(apiURL + "/api/user/categories-list-items-details", { id: params?.listItemId });
                 const { data } = response;
                 setProduct(data);
+                const selectedItem = cartItems.find((cartItem) => cartItem.id === data.id);
+                setProductQuantity(selectedItem?.quantity);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -27,6 +30,15 @@ const ProductOrder = () => {
 
         fetchData();
     }, [params?.id]);
+
+    const setQuantity = (qty) => {
+        setProductQuantity(qty);
+        addCartQuantityCount(product, qty);
+    }
+
+    const buyNowProduct = (product) => {
+        navigate('/product-confirmation/' + product?.id);
+    };
 
     return (
         <>
@@ -64,14 +76,14 @@ const ProductOrder = () => {
                                     if (productQuantity <= 1) {
                                         return;
                                     }
-                                    setProductQuantity(productQuantity - 1);
+                                    setQuantity(productQuantity - 1);
                                 }} />
                                 <label className="counter-label">{productQuantity}</label>
                                 <input type="button" className="counter-button" value={'+'} disabled={productQuantity >= 10} onClick={() => {
                                     if (productQuantity >= 10) {
                                         return;
                                     }
-                                    setProductQuantity(productQuantity + 1);
+                                    setQuantity(productQuantity + 1);
                                 }} />
                             </div>
                         </li>
@@ -79,9 +91,7 @@ const ProductOrder = () => {
                             <label>Total Price: </label> {(product?.price - product?.discount_price) * productQuantity} (incl. of all taxes)
                         </li>
                         <li>
-                            <Link to={`${'/product-confirmation/' + product?.id}`}>
-                                <input type="button" className="buy-now" value={'BUY NOW'} />
-                            </Link>
+                            <input type="button" className="buy-now" onClick={() => buyNowProduct(product)} value={'BUY NOW'} />
                         </li>
                     </ul>
                 </div>

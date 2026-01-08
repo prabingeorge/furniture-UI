@@ -51,6 +51,26 @@ export const CartProvider = ({ children }) => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
+  const addCartQuantityCount = (item, qty) => {
+    const isCartItem = cartItems.find((cartItem) => cartItem.id === item.id);
+
+    if (isCartItem) {
+      setCartItems(
+        cartItems.map((cartItem) =>
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: qty }
+            : cartItem
+        )
+      );
+    } else {
+      setCartItems([...cartItems, { ...item, quantity: 1 }]);
+    }
+  };
+
+  const totalCartCount = () => {
+    return cartItems.reduce((total, item) => total + item.quantity, 0);
+  };
+
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -73,6 +93,8 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         clearCart,
         getCartTotal,
+        addCartQuantityCount,
+        totalCartCount,
       }}
     >
       {children}

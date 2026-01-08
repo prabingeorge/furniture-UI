@@ -1,5 +1,5 @@
 .login-view {
-    
+
     *,
     :after,
     :before {
@@ -158,5 +158,19 @@
         color: #fff;
         display: flex;
         justify-content: space-between;
+    }
+
+    .footer-last {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        margin-top: 15px;
+        .link {
+            cursor: pointer;
+            color: #fff;
+            &:hover {
+                font-weight: bold;
+            }
+        }
     }
 }

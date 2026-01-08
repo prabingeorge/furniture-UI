@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import api from "../../contexts/APIContext";
+import { CartContext } from "../../contexts/Cart";
 import "./index.css";
 import starLogo from "../../assets/images/header/star-logo.gif";
 
@@ -12,6 +13,7 @@ const Header = () => {
     const selectedId = searchParams.get("id") || 1;
     const [categoriesList, setCategoriesList] = useState([]);
     const { user, logout } = useAuth();
+    const { totalCartCount } = useContext(CartContext);
 
     const apiURL = import.meta.env.VITE_API_URL;
     useEffect(() => {
@@ -56,9 +58,9 @@ const Header = () => {
                     {user?.name ? <>
                         <label onClick={logout}>{user?.name} (Logout)</label>
                     </>:
-                    <label>Sign In</label>}
+                    <label><Link to="/login">Sign In</Link></label>}
                     <label>Wishlist (0)</label>
-                    <label>Cart (0)</label>
+                    <label>Cart ({totalCartCount()})</label>
                 </div>
             </div>
             <div className="bottom-header">

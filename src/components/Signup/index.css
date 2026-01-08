@@ -70,7 +70,7 @@
     }
 
     .signup-form .group {
-        margin-bottom: 15px;
+        margin-bottom: 5px;
     }
 
     .signup-form .group .label,
@@ -103,7 +103,7 @@
     .signup-form .group .button {
         cursor: pointer;
         background: #1161ee;
-        margin-top: 30px;
+        /* margin-top: 30px; */
         &:hover {
             background: #598de6;
             color: #000;
