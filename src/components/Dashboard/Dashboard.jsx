@@ -28,12 +28,12 @@ const Dashboard = () => {
   if (categoriesList?.length === 0) {
     return (
       <div className="dashboard">
-      <div>
-        <div className="images-container">
-          <label className="no-data">No data is available.</label>
+        <div>
+          <div className="images-container">
+            <label className="no-data">No data is available.</label>
+          </div>
         </div>
       </div>
-    </div>
     )
   }
 
@@ -44,7 +44,12 @@ const Dashboard = () => {
           {categoriesList?.length > 0 && categoriesList.map((category) => {
             return (
               <div key={category?.id}>
-                <Images fileName={category?.image_name} categoryId={category?.category_id} id={category?.id} path={'dashboard'} cssClass={'circle-image'} />
+                <div>
+                  <Images fileName={category?.image_name} categoryId={category?.category_id} id={category?.id} path={'dashboard'} cssClass={'circle-image'} />
+                </div>
+                <div className="type-container">
+                  <label>{category?.type}</label>
+                </div>
               </div>
             )
           })}
