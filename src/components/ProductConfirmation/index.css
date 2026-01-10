@@ -197,6 +197,11 @@
         }
     }
 
+    .email-validation-container {
+        display: flex;
+        justify-content: center;
+    }
+
     .link {
         margin-left: 5px;
     }

@@ -1,11 +1,58 @@
 import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { renderToString } from 'react-dom/server';
 import Images from "../Images/Images";
 import { CartContext } from "../../contexts/Cart";
 import { useAuth } from "../../contexts/AuthContext";
 import api from "../../contexts/APIContext";
 import "./index.css";
+
+const EmailTemplate = ({ cartItems }) => {
+    return (
+        // < !DOCTYPE html >
+        <html>
+            <head>
+                <title>Furniture App</title>
+            </head>
+            <body>
+                <div id="root">
+                    <div className="email-view">
+                        <ul style={{ border: 'solid #1161ee', listStyle: 'none', padding: '0px' }}>
+                            {cartItems?.length > 0 && cartItems.map(item => {
+                                return (
+                                    <li key={item?.id} style={{ display: 'flex', border: '2px solid #ffa500', margin: '5px', padding: '10px' }}>
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <div>
+                                                Name: <label style={{ fontWeight: 'bold' }} key={item?.id}>{item?.item_name}</label>
+                                            </div>
+                                            <div>
+                                                Price: <label style={{ fontWeight: 'bold' }} key={item?.id}>{item?.price}</label> per Product
+                                            </div>
+                                            <div>
+                                                Discount: <label style={{ fontWeight: 'bold' }} key={item?.id}>{item?.discount_price}</label>
+                                            </div>
+                                            <div>
+                                                Total: <label style={{ fontWeight: 'bold' }} key={item?.id}>{(item?.price - item?.discount_price) * item?.quantity}</label>
+                                            </div>
+                                            <div>
+                                                Quantity: <label style={{ fontWeight: 'bold' }} key={item?.id}>{item?.quantity}</label>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <img style={{ height: '200px' }} src={'cid:' + item?.id + '@example.com'} alt={item?.image_name} />
+                                        </div>
+                                    </li>
+                                )
+                            })}
+                        </ul>
+                    </div>
+                </div>
+                <script src="/bundle.js"></script>
+            </body>
+        </html>
+    )
+}
 
 const ProductConfirmation = () => {
 
@@ -24,6 +71,7 @@ const ProductConfirmation = () => {
     const [userInfo, setUserInfo] = useState(initialUserInfo);
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
+    const [emailValidationError, setEmailValidationError] = useState("");
 
     const addFieldValue = (e) => {
         const { name, value } = e.target;
@@ -87,20 +135,25 @@ const ProductConfirmation = () => {
 
     const confirmedClick = async () => {
         try {
-            let response = null;
-            const promises = cartItems.map(async (cartItem) => {
-                const details = {
-                    userId: user?.id,
-                    categoriesId: cartItem?.categoryId,
-                    listId: cartItem?.list_id,
-                    listItemId: cartItem?.id,
-                    quantity: cartItem?.quantity,
-                    amount: cartItem?.price
-                }
-                response = await api.post(apiURL + "/api/user/purchase-detail", details);
+            const html = renderToString(<EmailTemplate cartItems={cartItems} />);
+            const attachments = [];
+            cartItems.map(item => {
+                const attachment = {
+                    filename: item?.image_name,
+                    path: "D:/Divine/furniturem/API/public/images/details/" + item?.image_name,
+                    cid: item?.id + '@example.com' //"nodemailer@example.com", // matches the cid in the img src attribute
+                };
+                attachments.push(attachment);
             });
-            await Promise.all(promises);
 
+            const emailBody = {
+                to: user?.email,
+                subject: "Furniture Order Confirmation",
+                message: html,
+                attachments: attachments
+            }
+
+            await api.post(apiURL + "/api/user-profile/send-mail", emailBody);
             clearCart();
             navigate('/delivery');
             // if (response?.statusText === "Created") {
@@ -109,15 +162,10 @@ const ProductConfirmation = () => {
             //     navigate('/delivery');
             // }
         } catch (error) {
-            // if(error?.response?.data?.message) {
-            //     setError(error?.response?.data?.message);
-            //     return;
-            // }
-            // if(error?.message) {
-            //     setError(error?.message);
-            //     return;
-            // }
-            // setError("Already info present!", error);
+            if (error?.response?.data?.message) {
+                setEmailValidationError(error?.response?.data?.message);
+                return;
+            }
         }
     };
 
@@ -183,10 +231,10 @@ const ProductConfirmation = () => {
     return (
         <div className="product-confirmation-view">
             <ul className="product-panel">
-                {cartItems?.length > 0 && cartItems.map(item => {
+                {cartItems?.length > 0 && cartItems.map((item, index) => {
                     return (
                         <>
-                            <li className="product-wrapper">
+                            <li key={index} className="product-wrapper">
                                 <div className="product-details">
                                     <div>
                                         Name: <label>{item?.item_name}</label>
@@ -301,6 +349,11 @@ const ProductConfirmation = () => {
                 </ul>
             </div>
             }
+            {user && emailValidationError && <div className="email-validation-container">
+                <div className="group group-error">
+                    <label className="error">{emailValidationError}</label>
+                </div>
+            </div>}
             {user && <div className="confirm-button-wrapper">
                 <input type="button" className="button" value="Confirmed" onClick={confirmedClick} />
             </div>}
