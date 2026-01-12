@@ -6,6 +6,8 @@ import api from "../../contexts/APIContext";
 import { CartContext } from "../../contexts/Cart";
 import "./index.css";
 import starLogo from "../../assets/images/header/star-logo.gif";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPhone, faEnvelopeCircleCheck, faSignOut } from '@fortawesome/free-solid-svg-icons'
 
 const Header = () => {
 
@@ -41,10 +43,10 @@ const Header = () => {
                     </ul>
                     <ul className="right-menu">
                         <li>
-                            Mobile: +91 8904761075
+                            <FontAwesomeIcon icon={faPhone} size="1x" style={{ color: '#ffa500' }} /> +91 8904761075
                         </li>
                         <li>
-                            Email: prabingeorge@gmail.com
+                            <FontAwesomeIcon icon={faEnvelopeCircleCheck} size="1x" style={{ color: '#ffa500' }} /> prabingeorge@gmail.com
                         </li>
                     </ul>
 
@@ -56,9 +58,12 @@ const Header = () => {
                 </div>
                 <div className="menu-container">
                     {user?.name ? <>
-                        <label onClick={logout}>{user?.name} (Logout)</label>
-                    </>:
-                    <label><Link to="/login">Sign In</Link></label>}
+                        <label onClick={logout}>
+                            {user?.name}
+                            <FontAwesomeIcon icon={faSignOut} size="1x" style={{ color: '#ffa500', paddingLeft: '5px' }} />
+                        </label>
+                    </> :
+                        <label><Link to="/login">Sign In</Link></label>}
                     <label>Wishlist (0)</label>
                     <label>Cart ({totalCartCount()})</label>
                 </div>
