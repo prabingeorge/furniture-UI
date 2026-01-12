@@ -7,7 +7,7 @@ import { CartContext } from "../../contexts/Cart";
 import "./index.css";
 import starLogo from "../../assets/images/header/star-logo.gif";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faEnvelopeCircleCheck, faSignOut } from '@fortawesome/free-solid-svg-icons'
+import { faPhone, faEnvelopeCircleCheck, faSignOut, faSignIn, faHeart, faCartShopping } from '@fortawesome/free-solid-svg-icons'
 
 const Header = () => {
 
@@ -63,9 +63,18 @@ const Header = () => {
                             <FontAwesomeIcon icon={faSignOut} size="1x" style={{ color: '#ffa500', paddingLeft: '5px' }} />
                         </label>
                     </> :
-                        <label><Link to="/login">Sign In</Link></label>}
-                    <label>Wishlist (0)</label>
-                    <label>Cart ({totalCartCount()})</label>
+                        <label>
+                            <FontAwesomeIcon icon={faSignIn} size="1x" style={{ color: '#ffa500', paddingRight: '5px' }} />
+                            <Link to="/login">Sign In</Link>
+                        </label>}
+                    <label>
+                        <FontAwesomeIcon icon={faHeart} size="1x" style={{ color: '#ffa500', paddingRight: '5px' }} />
+                        Wishlist (0)
+                    </label>
+                    <label>
+                        <FontAwesomeIcon icon={faCartShopping} size="1x" style={{ color: '#ffa500', paddingRight: '5px' }} />
+                        Cart ({totalCartCount()})
+                    </label>
                 </div>
             </div>
             <div className="bottom-header">
