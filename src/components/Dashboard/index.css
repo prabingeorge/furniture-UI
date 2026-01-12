@@ -1,9 +1,18 @@
 .dashboard {
 
+    .carousel-container {
+        margin: 40px;
+
+        .carousel-item {
+            height: 20%;
+        }
+    }
+
     .images-container {
         display: flex;
         flex-direction: row;
-        margin: 0px 20px;
+        /* margin: 0px 20px; */
+        margin: 50px;
         flex-wrap: wrap;
 
         @media only screen and (max-width: 600px) {

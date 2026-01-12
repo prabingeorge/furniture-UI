@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Images from "../Images/Images";
 import api from "../../contexts/APIContext";
+import AppCarousel from './../Carousel/Carousel';
 import "./index.css";
 
 const Dashboard = () => {
@@ -40,6 +41,9 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <div>
+        <div className="carousel-container">
+          <AppCarousel></AppCarousel>
+        </div>
         <div className="images-container">
           {categoriesList?.length > 0 && categoriesList.map((category) => {
             return (
