@@ -133,7 +133,37 @@ const ProductConfirmation = () => {
         }
     };
 
-    const confirmedClick = async () => {
+    const savePurchaseDetails = async () => {
+
+        try {
+            let response = null;
+            const promises = cartItems.map(async (cartItem) => {
+                const details = {
+                    userId: user?.id,
+                    categoriesId: cartItem?.categoryId,
+                    listId: cartItem?.list_id,
+                    listItemId: cartItem?.id,
+                    quantity: cartItem?.quantity,
+                    amount: cartItem?.price
+                }
+                response = await api.post(apiURL + "/api/user/purchase-detail", details);
+
+            });
+            await Promise.all(promises);
+        } catch (error) {
+            if (error?.response?.data?.message) {
+                setError(error?.response?.data?.message);
+                return;
+            }
+            if (error?.message) {
+                setError(error?.message);
+                return;
+            }
+            setError("Already info present!", error);
+        }
+    };
+
+    const sendConfirmationEmail = async () => {
         try {
             const html = renderToString(<EmailTemplate cartItems={cartItems} />);
             const attachments = [];
@@ -154,8 +184,6 @@ const ProductConfirmation = () => {
             }
 
             await api.post(apiURL + "/api/user-profile/send-mail", emailBody);
-            clearCart();
-            navigate('/delivery');
             // if (response?.statusText === "Created") {
             //     setSuccess("Order updated successfully");
             //     clearCart();
@@ -167,6 +195,13 @@ const ProductConfirmation = () => {
                 return;
             }
         }
+    }
+
+    const confirmedClick = async () => {
+        await savePurchaseDetails();
+        await sendConfirmationEmail();
+        clearCart();
+        navigate('/delivery');
     };
 
     const removeItemClick = (item) => {
